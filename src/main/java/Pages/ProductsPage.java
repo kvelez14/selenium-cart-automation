@@ -64,4 +64,35 @@ public class ProductsPage {
         }
     }
 
+    public void addProductsToCart(int count) throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        List<WebElement> productCards = driver.findElements(By.xpath("//div[@class='product-image-wrapper']"));
+
+        int totalToAdd = Math.min(count, productCards.size()); // avoid IndexOutOfBounds
+
+        for (int i = 0; i < totalToAdd; i++) {
+            WebElement card = productCards.get(i);
+
+            // Scroll & hover
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", card);
+            new Actions(driver).moveToElement(card).perform();
+
+            WebElement addButton = card.findElement(By.xpath(".//a[contains(text(),'Add to cart')]"));
+
+            try {
+                wait.until(ExpectedConditions.elementToBeClickable(addButton)).click();
+            } catch (ElementClickInterceptedException e) {
+                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", addButton);
+            }
+
+            // Handle 'Continue Shopping' popup
+            WebElement continueBtn = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.xpath("//button[text()='Continue Shopping']")));
+            continueBtn.click();
+
+            Thread.sleep(500); // brief wait before next item
+        }
+    }
+
+
 }

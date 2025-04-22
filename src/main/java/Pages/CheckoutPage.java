@@ -1,6 +1,7 @@
 package Pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -18,6 +19,11 @@ public class CheckoutPage {
     public String getTotalPrice(){
         WebElement total = driver.findElement(By.xpath("(//p[@class='cart_total_price'])[last()]"));
         return total.getText();
+    }
+
+    public void placeOrder(){
+        WebElement placeOrderBtn = driver.findElement(By.linkText("Place Order"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", placeOrderBtn);
     }
 
 }

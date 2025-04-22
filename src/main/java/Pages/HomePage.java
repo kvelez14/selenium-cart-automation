@@ -31,4 +31,10 @@ public class HomePage {
         WebElement products = driver.findElement(By.xpath("//a[@href='/products']"));
         products.click();
     }
+
+    public void contactUs(){
+        WebElement contact = driver.findElement(By.xpath("//a[@href='/contact_us']"));
+        contact.click();
+
+    }
 }
