@@ -1,55 +1,66 @@
 package Pages;
 
+import Base.BasePage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-
-public class SignupPage {
-    WebDriver driver;
-    WebDriverWait wait;
+public class SignupPage extends BasePage {
 
     public SignupPage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        super(driver);
     }
 
+    // Locators
+    private By nameField = By.xpath("//input[@placeholder='Name']");
+    private By emailField = By.xpath("//input[@data-qa='signup-email']");
+    private By signupButton = By.cssSelector("button[data-qa='signup-button']");
+    private By genderMr = By.id("id_gender1");
+    private By passwordField = By.id("password");
+    private By daysDropdown = By.id("days");
+    private By monthsDropdown = By.id("months");
+    private By yearsDropdown = By.id("years");
+    private By firstNameField = By.id("first_name");
+    private By lastNameField = By.id("last_name");
+    private By addressField = By.id("address1");
+    private By countryDropdown = By.id("country");
+    private By stateField = By.id("state");
+    private By cityField = By.id("city");
+    private By zipCodeField = By.id("zipcode");
+    private By mobileNumberField = By.id("mobile_number");
+    private By createAccountButton = By.xpath("//button[@data-qa='create-account']");
+    private By continueButton = By.linkText("Continue");
+
+    // Actions
     public void enterNameAndEmail(String name, String email) {
-        driver.findElement(By.xpath("//input[@placeholder='Name']")).sendKeys(name);
-        driver.findElement(By.xpath("//input[@data-qa='signup-email']")).sendKeys(email);
-        driver.findElement(By.cssSelector("button[data-qa='signup-button']")).click();
+        type(nameField, name);
+        type(emailField, email);
+        click(signupButton);
     }
 
     public void fillDetails() {
-        driver.findElement(By.id("id_gender1")).click();
-        driver.findElement(By.id("password")).sendKeys("Tracer@44");
+        click(genderMr);
+        type(passwordField, "Tracer@44");
 
-        new Select(driver.findElement(By.id("days"))).selectByVisibleText("13");
-        new Select(driver.findElement(By.id("months"))).selectByVisibleText("July");
-        new Select(driver.findElement(By.id("years"))).selectByVisibleText("2002");
+        selectByVisibleText(daysDropdown, "13");
+        selectByVisibleText(monthsDropdown, "July");
+        selectByVisibleText(yearsDropdown, "2002");
 
-        driver.findElement(By.id("first_name")).sendKeys("Kevin");
-        driver.findElement(By.id("last_name")).sendKeys("Velez");
-        driver.findElement(By.id("address1")).sendKeys("168 S McDonnell Avenue");
+        type(firstNameField, "Kevin");
+        type(lastNameField, "Velez");
+        type(addressField, "168 S McDonnell Avenue");
+        selectByVisibleText(countryDropdown, "United States");
+        type(stateField, "California");
+        type(cityField, "Los Angeles");
+        type(zipCodeField, "90022");
+        type(mobileNumberField, "3235198139");
 
-        new Select(driver.findElement(By.id("country"))).selectByVisibleText("United States");
-
-        driver.findElement(By.id("state")).sendKeys("California");
-        driver.findElement(By.id("city")).sendKeys("Los Angeles");
-        driver.findElement(By.id("zipcode")).sendKeys("90022");
-        driver.findElement(By.id("mobile_number")).sendKeys("3235198139");
-
-        WebElement create = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@data-qa='create-account']")));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", create);
-        create.click();
+        scrollTo(driver.findElement(createAccountButton));
+        click(createAccountButton);
     }
 
     public void clickContinue() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Continue"))).click();
+        click(continueButton);
     }
 }

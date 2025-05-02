@@ -1,0 +1,44 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="eShop Test Suite">
+    <test name="Login logout Tests">
+        <classes>
+           <class name="Tests.SignupTest">
+               <methods>
+                   <include name="testLogin"/>
+                   <include name="logOut"/>
+               </methods>
+           </class>
+        </classes>
+    </test>
+
+    <test name="Signup">
+        <classes>
+            <class name="Tests.SignupTest">
+                <methods>
+                    <include name="testUserSignup"/>
+                    <include name="logOut"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="ProductsTest" >
+        <classes>
+            <class name="Tests.SignupTest">
+                <methods>
+                    <include name="testLogin"/>
+                    <include name="productsTest"/>
+                    <include name="addProducts"/>
+                    <include name="cartsTest"/>
+                    <include name="checkOutTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+
+
+
+
+
+</suite>
